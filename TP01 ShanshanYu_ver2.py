@@ -31,17 +31,17 @@ class tic_tac_toc(object):
         else:
             print("You get the first!")
 
-    def move(self, row, column, mark, board):
+    def move(self, row, column, mark):
         try:
             row = int(row)
             column = int(column)
             if column not in range(1,10) or row not in range(1,10):
                 print("Warning: The input number should be in range [1,9]!")
                 return False            
-            if board[row - 1][column - 1] != ' ':
+            if self.board[row - 1][column - 1] != ' ':
                 print("Warning: The position is not empty!")
                 return False           
-            board[row - 1][column - 1] = mark
+            self.board[row - 1][column - 1] = mark
             return True  
         except:
             print("Warn: Your input is not an integer.")
@@ -96,11 +96,11 @@ class tic_tac_toc(object):
     def score(self,board,depth):
         winner_mark, state = self.check_win(board)
         if winner_mark == self.opponent_mark and state == "done":
-            return 81 - depth
+            return 10 - depth
         if winner_mark == self.user_mark and state == "done":
-            return depth - 81
+            return depth - 10
         return 0
-
+        
     def compute_empty_cells(self, board):
         empty_cells = []
         for row in range(9):
@@ -127,7 +127,7 @@ class tic_tac_toc(object):
             move['index'] = empty_cell
             new_board = deepcopy(board)
             row, column = empty_cell
-            self.move(row, column, mark, new_board)
+            self.move(new_board, row, column)
             result = self.minimax(new_board, not player_is_user,depth)
             move['score'] = result
             moves.append(move)
@@ -152,7 +152,7 @@ class tic_tac_toc(object):
         import copy
         empty_cells = self.compute_empty_cells(self.board)
         if len(empty_cells) == 81:
-            self.move(choice(range(9)), choice(range(9)), self.opponent_mark, self.board)
+            self.move(choice(range(9)), choice(range(9)), self.opponent_mark)
             return 
         print("Computer is thinking...")
         best_move = self.minimax(copy.deepcopy(self.board),False,-1)
@@ -177,16 +177,16 @@ class tic_tac_toc(object):
                 mark = self.opponent_mark
 
             print("Turn for '{}'".format(mark))
-            if self.is_user_turn:
-                row = input("Enter the number of row: ")
-                column = input("Enter the number of column: ")
-                if self.move(row, column, mark, self.board):
-                    self.is_user_turn = not self.is_user_turn
-                    with open('tictactoc.txt','a') as ttt:
-                        ttt.write(mark+":"+user_info+'\n')
-            else:
-                self.AI_play()
+            # if self.is_user_turn:
+            row = input("Enter the number of row: ")
+            column = input("Enter the number of column: ")
+            if self.move(row, column, mark):
                 self.is_user_turn = not self.is_user_turn
+                with open('tictactoc.txt','a') as ttt:
+                    ttt.write(mark+":"+user_info+'\n')
+            # else:
+            #     self.AI_play()
+            #     self.is_user_turn = not self.is_user_turn
                
 
             mark, status = self.check_win(self.board)
