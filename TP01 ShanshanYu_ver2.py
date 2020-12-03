@@ -109,56 +109,56 @@ class tic_tac_toc(object):
                     empty_cells.append((row  + 1, column + 1))
         return empty_cells
 
-    def minimax(self,board,player_is_user,depth):
-        from copy import deepcopy
-        mark, status = self.check_win(board)
-        if status != "None":
-            return self.score(board,depth)
-        depth += 1
-        if player_is_user:
-            mark = self.user_mark
-        else:
-            mark = self.opponent_mark
+    # def minimax(self,board,player_is_user,depth):
+    #     from copy import deepcopy
+    #     mark, status = self.check_win(board)
+    #     if status != "None":
+    #         return self.score(board,depth)
+    #     depth += 1
+    #     if player_is_user:
+    #         mark = self.user_mark
+    #     else:
+    #         mark = self.opponent_mark
 
-        moves = []
-        empty_cells = self.compute_empty_cells(board)
-        for empty_cell in empty_cells:
-            move = {}
-            move['index'] = empty_cell
-            new_board = deepcopy(board)
-            row, column = empty_cell
-            self.move(new_board, row, column)
-            result = self.minimax(new_board, not player_is_user,depth)
-            move['score'] = result
-            moves.append(move)
+    #     moves = []
+    #     empty_cells = self.compute_empty_cells(board)
+    #     for empty_cell in empty_cells:
+    #         move = {}
+    #         move['index'] = empty_cell
+    #         new_board = deepcopy(board)
+    #         row, column = empty_cell
+    #         self.move(new_board, row, column)
+    #         result = self.minimax(new_board, not player_is_user,depth)
+    #         move['score'] = result
+    #         moves.append(move)
 
-        best_move = None
-        if player_is_user:
-            best = float('inf')
-            for move in moves:
-                if move['score'] < best:
-                    best = move['score']
-                    best_move = move['index']
-        else:
-            best = float('-inf')
-            for move in moves:
-                if move['score'] > best:
-                    best = move['score']
-                    best_move = move['index']
-        return best_move
+    #     best_move = None
+    #     if player_is_user:
+    #         best = float('inf')
+    #         for move in moves:
+    #             if move['score'] < best:
+    #                 best = move['score']
+    #                 best_move = move['index']
+    #     else:
+    #         best = float('-inf')
+    #         for move in moves:
+    #             if move['score'] > best:
+    #                 best = move['score']
+    #                 best_move = move['index']
+    #     return best_move
 
-    def AI_play(self):
-        from random import choice
-        import copy
-        empty_cells = self.compute_empty_cells(self.board)
-        if len(empty_cells) == 81:
-            self.move(choice(range(9)), choice(range(9)), self.opponent_mark)
-            return 
-        print("Computer is thinking...")
-        best_move = self.minimax(copy.deepcopy(self.board),False,-1)
-        self.move(best_move[0],best_move[1],self.opponent_mark)
-        with open('tictactoc.txt','a') as ttt:
-            ttt.write(self.opponent_mark+":"+str(move)+'\n')
+    # def AI_play(self):
+    #     from random import choice
+    #     import copy
+    #     empty_cells = self.compute_empty_cells(self.board)
+    #     if len(empty_cells) == 81:
+    #         self.move(choice(range(9)), choice(range(9)), self.opponent_mark)
+    #         return 
+    #     print("Computer is thinking...")
+    #     best_move = self.minimax(copy.deepcopy(self.board),False,-1)
+    #     self.move(best_move[0],best_move[1],self.opponent_mark)
+    #     with open('tictactoc.txt','a') as ttt:
+    #         ttt.write(self.opponent_mark+":"+str(move)+'\n')
 
     def main(self):
         """
