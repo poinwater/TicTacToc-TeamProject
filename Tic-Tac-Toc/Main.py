@@ -24,8 +24,8 @@ class tic_tac_toc(object):
     
     def get_input(self):
         try:
-            row = input('please enter your input 1 -- 5 ')
-            column = input('please enter your input 1 -- 5 ')
+            row = input('please enter the number of row 1 -- 5 ')
+            column = input('please enter the number of column 1 -- 5 ')
             if row == 'q' or column == 'q':
                 return 'q', 'q'
             row = int(row) - 1
