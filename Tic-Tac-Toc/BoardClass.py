@@ -77,4 +77,12 @@ class Board(object):
         # recording moves
         # return: nothing
         with open('tictactoc.txt','a') as ttt:
-            ttt.write("{}: row {}, column {}\n".format(self.transfer_cell(mark), row, column))
+            ttt.write("{}: row {}, column {}\n".format(self.transfer_cell(mark), row + 1, column + 1))
+            ttt.write("-----------------\n")
+            for row in range(self.rows):
+                row_list = []
+                for column in range(self.columns):
+                    cell = self.board[row][column]
+                    row_list.append(self.transfer_cell(cell))
+                ttt.write(' | '.join(row_list) + "\n")
+            ttt.write("-----------------\n")

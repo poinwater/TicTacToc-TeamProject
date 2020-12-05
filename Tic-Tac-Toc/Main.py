@@ -21,6 +21,8 @@ class tic_tac_toc(object):
             print('You get the second!')
         else:
             print('You get the first!')
+        with open('tictactoc.txt','w') as ttt:
+            ttt.write("-- Start -- \n")
     
     def get_input(self):
         try:
@@ -100,8 +102,7 @@ class tic_tac_toc(object):
             user_info = input("Start a new game? ('q' to quit): ")
             if user_info != 'q':
                 self.start()
-                with open('tictactoc.txt','w') as ttt:
-                    ttt.write("-- New Turn -- \n")
+
 
 #TEST
 newgame = tic_tac_toc()
