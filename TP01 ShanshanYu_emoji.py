@@ -81,7 +81,7 @@ class tic_tac_toc(object):
                 return True
         #check column
         for column in range(self.columns):
-            if list(board[:][column]).count(mark) == self.inrow:
+            if list([board[row][column] for row in range(self.rows)]).count(mark) == self.inrow:
                 return True
         #check diagonal line
         diagonal1 = []
